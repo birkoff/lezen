@@ -45,7 +45,7 @@ class FeedsController < ApplicationController
   
   def destroy
     Feed.find(params[:id]).destroy
-    flash[:notice] = "Ambulancia Eliminada."
+    flash[:notice] = "Feed Deleted."
     redirect_to :action => 'index'
   end
 end
