@@ -1,0 +1,15 @@
+<h1>Lire Feeds</h1>
+<%= link_to 'Add Feed', new_feed_path, :class=> "btn" %>
+<%= link_to 'Read Later Queue', { :controller => :readlater, :action => :index }, :class => "btn" %>
+<div id="feeds-list">
+<table>
+    <% @feeds.each do |feed| %>
+    <tr>
+      <td class="feed-list-item"><%= link_to feed.name, feed_path(feed) %></td>
+      <td><%= link_to "Edit", edit_feed_path(feed), :class => 'btn'  %></td>
+      <td><%= link_to 'Delete', feed, :confirm => 'Sure?...He no le muevas si no eres Hector... aun no le pongo seguridad a esto', :method => :delete, :class => 'btn' %></td>
+    </tr>
+    <% end %>
+</table>
+</div>
+<br/><br/>

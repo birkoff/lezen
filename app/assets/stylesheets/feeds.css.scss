@@ -1,0 +1,144 @@
+// Place all the styles related to the Feeds controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body{
+  font-family: 'Helvetica Neue','Helvetica','Arial',sans-serif;
+}
+
+#wrapper {
+    background: none repeat scroll 0 0 #F1EFE2;
+}
+
+#wrapper2 {
+    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 1px 1px 5px #999999;
+    margin: 0 10px;
+}
+
+#header {
+    background-color: #507AAA;
+    color: #F8F8F8;
+    height: 6.2em;
+    margin: 0;
+    padding: 4px 8px 0 6px;
+    position: relative;
+}
+
+.main-content {
+    color: #0088CC;
+    font: 100% Verdana,sans-serif;
+    margin: 0 20px 35px;
+    min-height: 600px;
+    text-decoration: none;
+}
+
+.feed_item{
+border:2px solid #a1a1a1;
+padding:10px 40px; 
+background:#dddddd;
+/*width:300px;*/
+border-radius:25px;
+margin-bottom:40px;
+margin-right:40px;
+margin-left:40px;
+
+}
+
+#feed_description {
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-bottom:40px;
+}
+
+#feed_title{
+  margin-left: 40px;
+  margin-right: 40px;
+  /*padding: 10px 40px;*/
+}
+
+.feed_item_title{
+  border-bottom: 4px solid #F18A20;
+  color: #212C35 !important;
+  font-size: 1.75em !important;
+  /*padding: 0.7em 0 0.3em;*/
+}
+
+.feed_item_title a{
+  color: inherit;
+  font-size: 1.1em !important;
+  text-decoration:none; 
+}
+
+#feed_title a{
+  color: inherit;
+  font-size: 1.1em !important;
+  text-decoration:none; 
+}
+
+.feed_item_text{
+  font-size: 1.4em;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.feed_item_options{
+  float: right;
+}
+
+#feed_title{
+  color: #212C35;
+  font-size: 1.75em;
+  padding: 0.7em 0 0.3em;
+}
+
+#feeds-list tr { font-family:Georgia,serif,Times; font-size:18px; }
+.feed-list-item  a { 
+  display:block; 
+  //width:300px; 
+  height:28px; 
+  //background-color:#507AAA; 
+  //border:5px solid #366090;
+  padding-left:10px;
+  text-decoration:none; 
+  //color:#bfe1f1; 
+}
+
+.feed-list-item a:hover {  
+  -moz-box-shadow:10px 10px 20px #000000;
+  -webkit-box-shadow:10px 10px 20px #000000;
+  box-shadow:10px 10px 20px #000000; 
+}
+
+button.btn::-moz-focus-inner, input.btn[type="submit"]::-moz-focus-inner {
+    border: 0 none;
+    padding: 0;
+}
+
+.btn {
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25) important;
+}
+.btn {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #F5F5F5;
+    background-image: -moz-linear-gradient(center top , #FFFFFF, #E6E6E6);
+    background-repeat: repeat-x;
+    border-color: #E6E6E6 #E6E6E6 #B3B3B3;
+    border-image: none;
+    border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    color: #333333;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 13px;
+    line-height: 18px;
+    margin-bottom: 0;
+    padding: 4px 10px;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+    vertical-align: middle;
+}

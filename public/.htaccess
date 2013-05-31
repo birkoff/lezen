@@ -1,0 +1,7 @@
+Options -MultiViews
+PassengerResolveSymlinksInDocumentRoot on
+#Set this to whatever environment you'll be running in
+RailsEnv development
+RackBaseURI /lire
+PassengerAppRoot /home1/lifesup5/railsapp/dev/lire
+SetEnv GEM_HOME /home1/lifesup5/ruby/gems

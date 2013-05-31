@@ -1,0 +1,29 @@
+<%= form_for(@feed) do |f| %>
+  <% if @feed.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@llamada.errors.count, "error") %> prohibited this llamada from being saved:</h2>
+
+      <ul>
+      <% @feed.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+<div class="span span4">
+  <div class="field">
+    Name:<br />
+    <%= f.text_field :name, :size => "50" %>
+  </div>
+  <div class="field">
+    URL:<br />
+    <%= f.text_field :url, :size => "50" %>
+  </div>
+</div>
+
+<div class="actions">
+  <%= f.submit 'Save' %>
+</div>
+
+<% end %>
