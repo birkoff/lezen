@@ -24,6 +24,16 @@ body{
     position: relative;
 }
 
+#random-feeds{
+  float: right;
+  width: 70%;
+}
+
+#feeds-list{
+  float: left;
+  width: 30%;
+}
+
 .main-content {
     color: #0088CC;
     font: 100% Verdana,sans-serif;
