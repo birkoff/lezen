@@ -4,6 +4,7 @@
 #require 'open-uri'
 require 'feedzirra'
 require 'feedbag'
+require 'date'
 
 
 class FeedsController < ApplicationController
@@ -23,12 +24,15 @@ class FeedsController < ApplicationController
         f.entries.each do |item|
             title     = item.title
             url       = item.url
-            published = item.published 
+            published = item.published.to_s
             summary   = item.summary
+            p = published.split(" ")
+            published = "#{p[-1]}-#{p[1]}-#{p[2]}"
+            break if Date.parse(published) < Date.today # Tue Jun 04 15:16:00 UTC 2013
             @mem_feeds[i] = Currentfeed.new(feed_url, feed_title, title, url, published, summary)
             break
         end
-        i+=1
+        i+=1 unless @mem_feeds[i].nil?
         break if i>=MAX_FEED_ITEMS
     end
 
@@ -78,4 +82,4 @@ class FeedsController < ApplicationController
     flash[:notice] = "Ambulancia Eliminada."
     redirect_to :action => 'index'
   end
-end 
+end
