@@ -11,7 +11,8 @@ gem 'therubyracer'
 gem 'json'
 gem 'feedzirra'
 gem 'execjs'
-gem "geocoder"
+gem 'geocoder'
+gem 'feedbag'
 
 # Gems used only for assets and not required
 # in production environments by default.
