@@ -78,4 +78,4 @@ class FeedsController < ApplicationController
     flash[:notice] = "Ambulancia Eliminada."
     redirect_to :action => 'index'
   end
-end
+end 
