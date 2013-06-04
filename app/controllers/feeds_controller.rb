@@ -3,6 +3,7 @@
 #require 'rss/content'
 #require 'open-uri'
 require 'feedzirra'
+require 'feedbag'
 
 
 class FeedsController < ApplicationController
@@ -11,12 +12,12 @@ class FeedsController < ApplicationController
   Currentfeed = Struct.new(:feed_url, :feed_title, :title, :url, :published, :summary)
 
   def index
-    @feeds = Feed.all
+    @feeds = Feed.order("id ASC")
     @mem_feeds = Array.new()
     
     i = 0
     @feeds.each do |feed|
-        f = Feedzirra::Feed.fetch_and_parse(feed.url)        
+        f = Feedzirra::Feed.fetch_and_parse(feed.url)
         feed_url = f.url
         feed_title = f.title
         f.entries.each do |item|
@@ -60,10 +61,16 @@ class FeedsController < ApplicationController
   end
   
   def create
-    @feed = Feed.new(params[:feed])
-    @feed.save
-    flash[:notice] = "Feed Created."
-    redirect_to :action => 'index'
+    params[:feed][:url] = Feedbag.find(params[:feed][:url]).first
+    unless params[:feed][:url].nil? or params[:feed][:name].blank? then
+        @feed = Feed.new(params[:feed])
+        @feed.save
+        flash[:notice] = "Feed Created."
+        redirect_to :action => 'index'
+    else
+        flash[:notice] = "Feed URL or Name not valid."
+        redirect_to :action => 'new'
+    end
   end
   
   def destroy
