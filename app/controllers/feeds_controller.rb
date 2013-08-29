@@ -3,6 +3,7 @@ require 'open-uri'
 require 'feedzirra'
 require 'feedbag'
 require 'date'
+<<<<<<< HEAD
 require 'file_cache'
 require 'simple-rss'
 
@@ -13,10 +14,18 @@ class FeedsController < ApplicationController
   
   MAX_FEED_ITEMS = 30
   
+=======
+
+
+class FeedsController < ApplicationController
+  
+  MAX_FEED_ITEMS = 15
+>>>>>>> 81ba359a37b94844b6f7fee7422a02d276ab7c83
   Currentfeed = Struct.new(:feed_url, :feed_title, :title, :url, :published, :summary)
 
   def index
     @feeds = Feed.order("id ASC")
+<<<<<<< HEAD
   end
   
   def front_page
@@ -55,10 +64,29 @@ class FeedsController < ApplicationController
             #logger.debug "published: #{published}" if DEBUG == true
             #logger.debug "item.dc_date.to_s: #{item.dc_date.to_s}" if DEBUG == true
             #logger.debug "item.pubDate.to_s #{item.pubDate.to_s}" if DEBUG == true
+=======
+    @mem_feeds = Array.new()
+    
+    i = 0
+    @feeds.each do |feed|
+        f = Feedzirra::Feed.fetch_and_parse(feed.url)
+        feed_url = f.url
+        feed_title = f.title
+        f.entries.each do |item|
+            title     = item.title
+            url       = item.url
+            published = item.published.to_s
+            summary   = item.summary
+            p = published.split(" ")
+            published = "#{p[-1]}-#{p[1]}-#{p[2]}"
+            break if Date.parse(published) < Date.today # Tue Jun 04 15:16:00 UTC 2013
+            @mem_feeds[i] = Currentfeed.new(feed_url, feed_title, title, url, published, summary)
+>>>>>>> 81ba359a37b94844b6f7fee7422a02d276ab7c83
             break
         end
         i+=1 unless @mem_feeds[i].nil?
         break if i>=MAX_FEED_ITEMS
+<<<<<<< HEAD
      end
      #logger.debug "mem feeds #{@mem_feeds.inspect}" if $DEBUG == true
      render :partial => 'front_page'
@@ -107,6 +135,10 @@ class FeedsController < ApplicationController
      end
      #logger.debug "mem feeds #{@mem_feeds.inspect}" if $DEBUG == true
      render :partial => 'front_page'
+=======
+    end
+
+>>>>>>> 81ba359a37b94844b6f7fee7422a02d276ab7c83
   end
   
   def show

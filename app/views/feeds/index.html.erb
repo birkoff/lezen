@@ -33,7 +33,20 @@ $(document).ready(function()
     <% end %>
 </table>
 </div>
+<<<<<<< HEAD
 <!-- <div id='random-feeds' class="random-feeds" style="overflow: auto; width: 78%%; height: 1000px;"> -->
 <div id='random-feeds' class="random-feeds">
+=======
+<div id='random-feeds'>
+    <div class="feed">
+        <% i=0 %>
+        <% @mem_feeds.each do |item| %>
+          <div class="feed_item" id="feed_item_<%= i %>">
+            <div class="feed_item_title"><a href="<%= item.url %>" target="_blank"><%= item.title.html_safe %></a></div>
+            <div class="feed_item_date"><%= item.published if defined? item.published %></div>
+          </div>  
+        <% end %>
+    </div>
+>>>>>>> 81ba359a37b94844b6f7fee7422a02d276ab7c83
 </div>
 <br/><br/>

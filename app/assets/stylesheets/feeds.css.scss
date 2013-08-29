@@ -24,6 +24,7 @@ body{
     position: relative;
 }
 
+<<<<<<< HEAD
 .random-feeds{
   float: right;
   width: 78%;
@@ -33,6 +34,16 @@ body{
 .feeds-list{
   float: left;
   width: 22%;
+=======
+#random-feeds{
+  float: right;
+  width: 70%;
+}
+
+#feeds-list{
+  float: left;
+  width: 30%;
+>>>>>>> 81ba359a37b94844b6f7fee7422a02d276ab7c83
 }
 
 .main-content {
