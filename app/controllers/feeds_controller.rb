@@ -3,7 +3,6 @@ require 'open-uri'
 require 'feedzirra'
 require 'feedbag'
 require 'date'
-<<<<<<< HEAD
 require 'file_cache'
 require 'simple-rss'
 
@@ -14,18 +13,10 @@ class FeedsController < ApplicationController
   
   MAX_FEED_ITEMS = 30
   
-=======
-
-
-class FeedsController < ApplicationController
-  
-  MAX_FEED_ITEMS = 15
->>>>>>> 81ba359a37b94844b6f7fee7422a02d276ab7c83
   Currentfeed = Struct.new(:feed_url, :feed_title, :title, :url, :published, :summary)
 
   def index
     @feeds = Feed.order("id ASC")
-<<<<<<< HEAD
   end
   
   def front_page
@@ -64,70 +55,6 @@ class FeedsController < ApplicationController
             #logger.debug "published: #{published}" if DEBUG == true
             #logger.debug "item.dc_date.to_s: #{item.dc_date.to_s}" if DEBUG == true
             #logger.debug "item.pubDate.to_s #{item.pubDate.to_s}" if DEBUG == true
-=======
-    @mem_feeds = Array.new()
-    
-    i = 0
-    @feeds.each do |feed|
-        f = Feedzirra::Feed.fetch_and_parse(feed.url)
-        feed_url = f.url
-        feed_title = f.title
-        f.entries.each do |item|
-            title     = item.title
-            url       = item.url
-            published = item.published.to_s
-            summary   = item.summary
-            p = published.split(" ")
-            published = "#{p[-1]}-#{p[1]}-#{p[2]}"
-            break if Date.parse(published) < Date.today # Tue Jun 04 15:16:00 UTC 2013
-            @mem_feeds[i] = Currentfeed.new(feed_url, feed_title, title, url, published, summary)
->>>>>>> 81ba359a37b94844b6f7fee7422a02d276ab7c83
-            break
-        end
-        i+=1 unless @mem_feeds[i].nil?
-        break if i>=MAX_FEED_ITEMS
-<<<<<<< HEAD
-     end
-     #logger.debug "mem feeds #{@mem_feeds.inspect}" if $DEBUG == true
-     render :partial => 'front_page'
-  end
-  
-  def generate_index_feeds
-    @feeds = Feed.order("id ASC")
-    @mem_feeds = Array.new()
-    i = 0
-    @feeds.each do |feed|
-        f = fetch_feed(feed, true)
-        if f.nil? : next end
-
-        feed_url = get_url(f)
-        feed_title = f.title
-        
-        logger.debug "feed_url: #{feed_url}" if $DEBUG == true
-        logger.debug "feed_title: #{feed_title}" if $DEBUG == true
-        #logger.debug "entries #{f.inspect}" if feed_title == 'La uno.com'
-        
-        j=0
-        f.entries.each do |item|
-            j=j+1
-            title     = item.title + " - " + feed_title
-            url = get_url(item)
-            published = get_date(item)
-            summary   = item.summary
-            p = published.split(" ")
-            published = "#{p[-1]}-#{p[1]}-#{p[2]}"
-            logger.debug "item published  #{published}" if $DEBUG == true
-            a=Date.parse(published)
-            b=Date.today
-            logger.debug "Break if: #{a} < #{b}" if $DEBUG == true
-            break if a < b #a < b # Tue Jun 04 15:16:00 UTC 2013
-            @mem_feeds[i] = Currentfeed.new(feed_url, feed_title, title, url, published, summary)
-            
-            #logger.debug "title: #{title}" if DEBUG == true
-            #logger.debug "url: #{url}" if DEBUG == true
-            #logger.debug "published: #{published}" if DEBUG == true
-            #logger.debug "item.dc_date.to_s: #{item.dc_date.to_s}" if DEBUG == true
-            #logger.debug "item.pubDate.to_s #{item.pubDate.to_s}" if DEBUG == true
             break
         end
         i+=1 unless @mem_feeds[i].nil?
@@ -135,10 +62,6 @@ class FeedsController < ApplicationController
      end
      #logger.debug "mem feeds #{@mem_feeds.inspect}" if $DEBUG == true
      render :partial => 'front_page'
-=======
-    end
-
->>>>>>> 81ba359a37b94844b6f7fee7422a02d276ab7c83
   end
   
   def show
@@ -209,7 +132,7 @@ class FeedsController < ApplicationController
           #logger.debug "Getting feed cache" if $DEBUG == true
           
           cache_file = feed_url.gsub(/[^a-zA-Z0-9 ]/, '_') 
-          cache_file = "cache/#{cache_file}.xml"
+          cache_file = "#{cache_file}.xml"
           
           #logger.debug "cache file: #{cache_file}" if $DEBUG == true
     
