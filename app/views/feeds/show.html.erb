@@ -9,7 +9,7 @@
   <% i=0 %>
   <% @feed.entries.each do |item| %>
   <%
-   if defined? item.content then
+    if defined? item.content then
        content = item.content
    elsif defined? item.summary
        content = item.summary
@@ -32,7 +32,7 @@
             <% end %>
         <% end %>
     </div>
-      <div class="feed_item_date"><%= item.published if defined? item.published %></div>
+       <div class="feed_item_date"><%= item.published if defined? item.published %></div>
       <div class="feed_item_text"><%= item.content.html_safe if defined? item.content.html_safe %></div>
       <% unless defined? item.content.html_safe %>
         <div class="feed_item_text"><%= item.summary.html_safe if defined? item.summary.html_safe %></div>

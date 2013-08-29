@@ -10,8 +10,10 @@ gem 'mysql2'
 gem 'therubyracer'
 gem 'json'
 gem 'feedzirra'
+gem "simple-rss", "~> 1.2.3"
 gem 'execjs'
-gem "geocoder"
+gem 'geocoder'
+gem 'feedbag'
 
 # Gems used only for assets and not required
 # in production environments by default.

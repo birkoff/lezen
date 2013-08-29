@@ -1,8 +1,10 @@
 Lire::Application.routes.draw do
   #get "feeds/index"
+  get "feeds/front_page"
   root :to => "feeds#index"
   resources :feeds
   resources :readlater
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
   

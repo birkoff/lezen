@@ -1,0 +1,10 @@
+
+<div class="feed">
+        <% i=0 %>
+        <% @mem_feeds.each do |item| %>
+          <div class="feed_item" id="feed_item_<%= i %>">
+            <div class="feed_item_title_index"><a href="<%= item.url %>" target="_blank"><%= item.title.html_safe %></a></div>
+            <div class="feed_item_date"><%= item.published if defined? item.published %></div>
+          </div>  
+        <% end %>
+</div>

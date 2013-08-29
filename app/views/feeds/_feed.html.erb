@@ -1,0 +1,48 @@
+<div class="feed">
+     
+    <div id="feed_title">
+      <a href="<%= @feed.url %>" target="_blank"><%= @feed.title.html_safe %></a>
+    </div>
+    
+    <div id="feed_description"><%= @feed.description %></div>
+  <% i=0 %>
+  <% @feed.entries.each do |item| %>
+  <%
+    if defined? item.content then
+       content = item.content
+   elsif defined? item.summary
+       content = item.summary
+   end
+   inqueue = false
+   %>
+    <div class="feed_item" id="feed_item_<%= i %>">
+      <div class="feed_item_title"><a href="<%= item.url %>" target="_blank"><%= item.title.html_safe %></a></div>
+      <div class="feed_item_options"> 
+        <% if @read_later_items.include?(item.title.html_safe)  %>
+            <%= link_to 'In queue', { :controller => :readlater, :action => :index }, :class => "btn" %>
+        <% else %>
+            <%= form_tag('/lire/readlater') do %>
+                <%= hidden_field_tag "readlater[title]", item.title.html_safe %>
+                <%= hidden_field_tag "readlater[url]", item.url %>
+                <%= hidden_field_tag "readlater[feed_id]", @feedobj.id %>
+                <%= hidden_field_tag "readlater[date_published]", item.published %>
+                <%= hidden_field_tag 'feed_item_id', "feed_item_#{i}" %>
+                <%= submit_tag "read later", :class => "btn" %>
+            <% end %>
+        <% end %>
+        <%= link_to 'Like', feeds_path, :class => "btn" %>
+    </div>
+       <div class="feed_item_date"><%= item.published if defined? item.published %></div>
+      <div class="feed_item_text"><%= item.content.html_safe if defined? item.content.html_safe %></div>
+      <% unless defined? item.content.html_safe %>
+        <div class="feed_item_text"><%= item.summary.html_safe if defined? item.summary.html_safe %></div>
+      <% end %>
+    </div>
+    <% 
+      i +=1;
+      if i >= 20 then
+        break
+      end 
+    %>
+  <% end %>
+</div>

@@ -24,11 +24,22 @@ body{
     position: relative;
 }
 
+.random-feeds{
+  float: right;
+  width: 78%;
+  margin-top: 20px;
+}
+
+.feeds-list{
+  float: left;
+  width: 22%;
+}
+
 .main-content {
     color: #0088CC;
     font: 100% Verdana,sans-serif;
     margin: 0 20px 35px;
-    min-height: 600px;
+    min-height: 1100px;
     text-decoration: none;
 }
 
@@ -39,8 +50,8 @@ background:#dddddd;
 /*width:300px;*/
 border-radius:25px;
 margin-bottom:40px;
-margin-right:40px;
-margin-left:40px;
+/*margin-right:40px;*/
+/*margin-left:40px;*/
 
 }
 
@@ -60,6 +71,13 @@ margin-left:40px;
   border-bottom: 4px solid #F18A20;
   color: #212C35 !important;
   font-size: 1.75em !important;
+  /*padding: 0.7em 0 0.3em;*/
+}
+
+.feed_item_title_index{
+  border-bottom: 4px solid #F18A20;
+  color: #212C35 !important;
+  /*font-size: 1.75em !important;*/
   /*padding: 0.7em 0 0.3em;*/
 }
 
