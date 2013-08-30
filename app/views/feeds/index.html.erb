@@ -1,7 +1,11 @@
 <script type="text/javascript">
 $(document).ready(function()
 { 
-      	var url = "/lire/feeds/front_page/";
+	    var path = document.location.pathname;
+	    var env = path.replace(/\//g,'');
+
+      	var url = "/"+ env +"/feeds/front_page/";
+      	
 	    $.get(url, function(html) {
 	        $("#random-feeds").html(html);
 	    });
@@ -12,7 +16,7 @@ $(document).ready(function()
             var arrid = id.split('-');
             id = arrid[2];
             
-            var url = "/lire/feeds/"+id;
+            var url = "/" + env + "/feeds/"+id;
             $.get(url, function(html) {
 	          $("#random-feeds").html(html);
 	        }); 

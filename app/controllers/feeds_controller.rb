@@ -132,7 +132,7 @@ class FeedsController < ApplicationController
           #logger.debug "Getting feed cache" if $DEBUG == true
           
           cache_file = feed_url.gsub(/[^a-zA-Z0-9 ]/, '_') 
-          cache_file = "#{cache_file}.xml"
+          cache_file = "cache/#{cache_file}.xml"
           
           #logger.debug "cache file: #{cache_file}" if $DEBUG == true
     
