@@ -16,15 +16,15 @@ class FileCache
     # update interval and returns cache contents  
     
     def get_api_cache
-        Rails.logger.debug "file cache"
-        if File.exist?(@@cache_file) then
-          Rails.logger.debug "file cache does not exist"
-          a=Time.new.to_i
-          b=File.ctime(@@cache_file).to_i
-          c=a-b
-          Rails.logger.debug "if #{Time.new.to_i} - #{ File.ctime(@@cache_file).to_i} > #{@@update_interval}"
-          Rails.logger.debug "if #{c} > #{@@update_interval}"
-        end
+        Rails.logger.debug "get api file cache - #{@@cache_file}"
+        
+        a=Time.new.to_i
+        b=File.ctime(@@cache_file).to_i
+        c=a-b
+        Rails.logger.debug "File.ctime(@@cache_file): #{b}"
+        Rails.logger.debug "if #{a} - #{b} > #{@@update_interval}"
+        Rails.logger.debug "if #{c} > #{@@update_interval}"
+       
         #unless  File.exist?(@@cache_file) ||
         if !File.exist?(@@cache_file) or c > @@update_interval
             Rails.logger.debug "file cache does not exist or not up to date for #{@@cache_file}"

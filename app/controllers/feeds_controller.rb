@@ -24,43 +24,46 @@ class FeedsController < ApplicationController
     @mem_feeds = Array.new()
     i = 0
     @feeds.each do |feed|
+        logger.debug "################################" if $DEBUG == true
+        logger.debug "#                              #" if $DEBUG == true
+        logger.debug "################################" if $DEBUG == true
+        
         f = fetch_feed(feed, true)
         if f.nil? : next end
 
         feed_url = get_url(f)
         feed_title = f.title
-        
+     
         logger.debug "feed_url: #{feed_url}" if $DEBUG == true
         logger.debug "feed_title: #{feed_title}" if $DEBUG == true
-        #logger.debug "entries #{f.inspect}" if feed_title == 'La uno.com'
         
-        j=0
         f.entries.each do |item|
-            j=j+1
-            title     = item.title + " - " + feed_title
+            title = item.title + " - " + feed_title
             url = get_url(item)
             published = get_date(item)
             summary   = item.summary
             p = published.split(" ")
             published = "#{p[-1]}-#{p[1]}-#{p[2]}"
-            logger.debug "item published  #{published}" if $DEBUG == true
+            
             a=Date.parse(published)
             b=Date.today
-            logger.debug "Break if: #{a} < #{b}" if $DEBUG == true
-            break if a < b #a < b # Tue Jun 04 15:16:00 UTC 2013
-            @mem_feeds[i] = Currentfeed.new(feed_url, feed_title, title, url, published, summary)
             
-            #logger.debug "title: #{title}" if DEBUG == true
+            logger.debug "title: #{title}" if $DEBUG == true
+            logger.debug "item published  #{published}" if $DEBUG == true
+            logger.debug "Break if: #{a} < #{b}" if $DEBUG == true
             #logger.debug "url: #{url}" if DEBUG == true
             #logger.debug "published: #{published}" if DEBUG == true
             #logger.debug "item.dc_date.to_s: #{item.dc_date.to_s}" if DEBUG == true
             #logger.debug "item.pubDate.to_s #{item.pubDate.to_s}" if DEBUG == true
+            
+            break if a < b #Break if: 2013-08-30 < 2013-08-30
+            @mem_feeds[i] = Currentfeed.new(feed_url, feed_title, title, url, published, summary)
+
             break
         end
         i+=1 unless @mem_feeds[i].nil?
         break if i>=MAX_FEED_ITEMS
      end
-     #logger.debug "mem feeds #{@mem_feeds.inspect}" if $DEBUG == true
      render :partial => 'front_page'
   end
   
@@ -129,28 +132,30 @@ class FeedsController < ApplicationController
       feed_url = feed.url
           
       if cache == true then
-          #logger.debug "Getting feed cache" if $DEBUG == true
-          
           cache_file = feed_url.gsub(/[^a-zA-Z0-9 ]/, '_') 
           cache_file = "cache/#{cache_file}.xml"
           
-          #logger.debug "cache file: #{cache_file}" if $DEBUG == true
-    
-          file_cache = FileCache.new(feed.url, cache_file, 10)
-          content = file_cache.get_api_cache
-                    
-          start_time = Time.now
+          logger.debug "Getting feed cache" if $DEBUG == true
+          logger.debug "cache file: #{cache_file}" if $DEBUG == true
+          
           begin
+            file_cache = FileCache.new(feed.url, cache_file, 10)
+            content = file_cache.get_api_cache
+                    
+            start_time = Time.now
+          
             f = SimpleRSS.parse(content)
-            #logger.debug "Debug SimpleRSS.parse(content)" if $DEBUG == true
           rescue Exception => e
             return nil
           end
       else
           start_time = Time.now
-          #logger.debug "Getting feed without cache" if $DEBUG == true
-          f = Feedzirra::Feed.fetch_and_parse(feed.url)
-          #logger.debug "debug Feedzirra::Feed.parse(content) #{f.url}" if $DEBUG == true
+          logger.debug "Getting feed without cache" if $DEBUG == true
+          begin
+            f = Feedzirra::Feed.fetch_and_parse(feed.url)
+          rescue Exception => e
+            return nil
+          end
       end
       
       
