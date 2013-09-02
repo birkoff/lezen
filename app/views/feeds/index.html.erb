@@ -3,11 +3,21 @@ $(document).ready(function()
 { 
 	    var path = document.location.pathname;
 	    var env = path.replace(/\//g,'');
-
-      	var url = "/"+ env +"/feeds/front_page/";
-      	
+    
+      	var url = "feeds/front_page";
+        /*
+        var feeds = 
+        
+        for(i=1;i <= feeds.length; i++)
+        {
+        	var url = "feeds/front_page/" + i;
+        	$.get(url, function(html) {
+	        	$("#random-feeds").append(html);
+	    	});
+        }
+        */	
 	    $.get(url, function(html) {
-	        $("#random-feeds").html(html);
+	        	$("#random-feeds").html(html);
 	    });
     
         $(".feed-link").each(function () {
@@ -16,7 +26,7 @@ $(document).ready(function()
             var arrid = id.split('-');
             id = arrid[2];
             
-            var url = "/" + env + "/feeds/"+id;
+            var url = "feeds/"+id;
             $.get(url, function(html) {
 	          $("#random-feeds").html(html);
 	        }); 
