@@ -16,8 +16,6 @@ class FeedsController < ApplicationController
   $update_interval = 360
   #$cache_status_file = "cache/last_update_#{session[:user_id]}"
   
-  #Currentfeed = Struct.new(:feed_url, :feed_title, :title, :url, :published, :summary)
-
   def index
     session[:user_id] = 1 #todo: implement login 
     @feeds = Feed.get_user_feeds()
@@ -30,12 +28,11 @@ class FeedsController < ApplicationController
     Rails.logger.debug "Front Page..." if $DEBUG == true
     #if FeedsHandler.cache_needs_update($cache_status_file, $update_interval) then
     unless params[:id].nil?  then
-        FeedsHandler.update_front_page_cache(params[:id].to_i)
+        @mem_feeds = FeedsHandler.update_front_page_cache(params[:id].to_i)
+    else
+        Rails.logger.debug "Cache up to date, fetting feeds from DB..." if $DEBUG == true
+        @mem_feeds = Item.get_user_items()
     end
-    
-    Rails.logger.debug "Cache up to date, fetting feeds from DB..." if $DEBUG == true
-    
-    @mem_feeds = Item.get_user_items()
     render :partial => 'front_page'
   end
   

@@ -1,6 +1,6 @@
 class FeedsHandler
   MAX_FEED_ITEMS = 30
-  
+    
   def self.fetch_feed(feed, cache)
       feed_url = feed.url
           
@@ -52,9 +52,11 @@ class FeedsHandler
     #@feeds = Feed.get_user_feeds()
     
     #Item.delete_user_items()
+    #Currentfeed = Struct.new(:feed_url, :feed_title, :title, :url, :published, :user_id)
+    @mem_feeds = Array.new()
     
-    #@mem_feeds = Array.new()
     i = 0
+    x = 0
     @feeds.each do |feed|
         Rails.logger.debug "################################" if $DEBUG == true
         Rails.logger.debug "#                              #" if $DEBUG == true
@@ -95,8 +97,10 @@ class FeedsHandler
             #Rails.logger.debug "item.pubDate.to_s #{item.pubDate.to_s}" if DEBUG == true
             j=j+1
             break if a < b or j > 4 #Break if: 2013-08-30 < 2013-08-30 or already 4 items from that feed
-            #@mem_feeds[i] = Currentfeed.new(feed_url, feed_title, title, url, published, summary)
             
+            #Currentfeed.new(feed_url, feed_title, title, url, published, 1)
+            
+            #Rails.logger.debug "Memfeeds: #{@mem_feeds.inspect}" if $DEBUG == true
             
             @item = Item.new
             @item.feed_url = feed_url
@@ -107,12 +111,14 @@ class FeedsHandler
             @item.user_id = 1
             @item.save
             
-            self.update_cache_status_file($cache_status_file,Time.new.to_s)
-            
+            @mem_feeds[x] = @item
+            x = x + 1   
         end
-        i+=1 #unless @mem_feeds[i].nil?
+        i+=1 unless @mem_feeds[i].nil?
         break if i>=MAX_FEED_ITEMS
      end
+     self.update_cache_status_file($cache_status_file,Time.new.to_s)
+     return @mem_feeds
   end
   
   def self.get_url(_feed)
