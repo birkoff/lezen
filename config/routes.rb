@@ -1,9 +1,14 @@
 Lire::Application.routes.draw do
+  
   #get "feeds/index"
-  get "feeds/front_page"
+  #get "feeds/front_page#index"
+  get "feeds/cache_needs_update"
+  get "feeds/front_page/"
   root :to => "feeds#index"
   resources :feeds
   resources :readlater
+  get ':controller(/:action(/:id))'
+  
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

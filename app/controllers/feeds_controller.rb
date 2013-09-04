@@ -25,14 +25,31 @@ class FeedsController < ApplicationController
   end
   
   def front_page
+    params[:id] ||= nil
+    
     Rails.logger.debug "Front Page..." if $DEBUG == true
-    if FeedsHandler.cache_needs_update($cache_status_file, $update_interval) then
-        FeedsHandler.update_front_page_cache()
+    #if FeedsHandler.cache_needs_update($cache_status_file, $update_interval) then
+    unless params[:id].nil?  then
+        FeedsHandler.update_front_page_cache(params[:id].to_i)
     end
     
     Rails.logger.debug "Cache up to date, fetting feeds from DB..." if $DEBUG == true
+    
     @mem_feeds = Item.get_user_items()
     render :partial => 'front_page'
+  end
+  
+  def cache_needs_update
+      cache_needs_update = FeedsHandler.cache_needs_update($cache_status_file, $update_interval)
+      feeds = ''
+      if cache_needs_update then
+        Rails.logger.debug "Cache needs update, updating..." if $DEBUG == true
+        Item.delete_user_items()
+        result = Feed.get_user_feeds(false)
+        feeds = result.join(",")
+      end
+      result = "#{cache_needs_update.to_s}|#{feeds}"
+      render :text => result
   end
   
   def show

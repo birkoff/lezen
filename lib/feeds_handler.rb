@@ -39,10 +39,19 @@ class FeedsHandler
       return f
   end
   
-  def self.update_front_page_cache
+  def self.update_front_page_cache(feed_id)
     Rails.logger.debug "UPDATE FRONT PAGE CACHE..." if $DEBUG == true
-    @feeds = Feed.get_user_feeds()
-    Item.delete_user_items()
+    
+    if feed_id.nil? then
+        @feeds = Feed.get_user_feeds()
+    else
+        @feeds = Array.new(1) { Hash.new }
+        @feeds[0] = Feed.find(feed_id)
+    end
+    
+    #@feeds = Feed.get_user_feeds()
+    
+    #Item.delete_user_items()
     
     #@mem_feeds = Array.new()
     i = 0

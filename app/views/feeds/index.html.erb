@@ -3,23 +3,39 @@ $(document).ready(function()
 { 
 	    var path = document.location.pathname;
 	    var env = path.replace(/\//g,'');
-    
-      	var url = "feeds/front_page";
-        /*
-        var feeds = 
         
-        for(i=1;i <= feeds.length; i++)
-        {
-        	var url = "feeds/front_page/" + i;
-        	$.get(url, function(html) {
-	        	$("#random-feeds").append(html);
-	    	});
-        }
-        */	
+        var url = "feeds/cache_needs_update";
+        
+        $.get(url, function(cache_needs_update) {
+        	needs_update = new String(cache_needs_update);
+        	var obj = needs_update.split("|");
+        	needs_update = obj[0];
+        	feeds = obj[1].split(",");
+        	
+        	if(needs_update == 'true')
+	        {  
+		        for(i=0;i < feeds.length; i++)
+		        {
+		        	var url = "feeds/front_page/" + feeds[i];
+		        	$.get(url, function(html) {
+			        	$("#random-feeds").append(html);
+			    	});
+		        }
+		    }
+		    else
+		    {
+		    	var url = "feeds/front_page/";
+		        $.get(url, function(html) {
+			        $("#random-feeds").html(html);
+			    });
+		    }
+	    });
+        
+        /*
 	    $.get(url, function(html) {
 	        	$("#random-feeds").html(html);
 	    });
-    
+        */
         $(".feed-link").each(function () {
           $(this).click(function() {
             var id = this.id;
