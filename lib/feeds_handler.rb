@@ -39,7 +39,7 @@ class FeedsHandler
       return f
   end
   
-  def self.update_front_page_cache(feed_id)
+  def self.update_front_page_cache(feed_id, user_id)
     Rails.logger.debug "UPDATE FRONT PAGE CACHE..." if $DEBUG == true
     
     if feed_id.nil? then
@@ -59,10 +59,10 @@ class FeedsHandler
     x = 0
     @feeds.each do |feed|
         Rails.logger.debug "################################" if $DEBUG == true
-        Rails.logger.debug "#                              #" if $DEBUG == true
         Rails.logger.debug "################################" if $DEBUG == true
         
-        f = fetch_feed(feed, true)
+        f = fetch_feed(feed, false)
+        
         if f.nil?
            next 
         end
@@ -108,7 +108,7 @@ class FeedsHandler
             @item.title = title
             @item.url = url
             @item.published = published
-            @item.user_id = 1
+            @item.user_id = user_id
             @item.save
             
             @mem_feeds[x] = @item
@@ -124,14 +124,14 @@ class FeedsHandler
   def self.get_url(_feed)
     #Rails.logger.debug "Item URL #{url}" if $DEBUG == true
     #Rails.logger.debug "item url: #{feed.url}" if $DEBUG == true
-    Rails.logger.debug "Item link: #{_feed.link}" if $DEBUG == true
+    #Rails.logger.debug "Item link: #{_feed.link}" if $DEBUG == true
             
-    Rails.logger.debug "if url blank: #{(defined? _feed.url).blank?}"
-    Rails.logger.debug "if url nil #{(defined? _feed.url).nil?}"
-    Rails.logger.debug "if link blank: #{(defined? _feed.link).blank?}"
-    Rails.logger.debug "if link nil: #{(defined? _feed.link).nil?}"
-    return _feed.link
-    #if defined? feed.link
+    #Rails.logger.debug "if url blank: #{(defined? _feed.url).blank?}"
+    #Rails.logger.debug "if url nil #{(defined? _feed.url).nil?}"
+    #Rails.logger.debug "if link blank: #{(defined? _feed.link).blank?}"
+    #Rails.logger.debug "if link nil: #{(defined? _feed.link).nil?}"
+    return _feed.url
+    #if defined? ur.link
     #  url = _feed.link
     #elsif defined? feed.url
     #  url = _feed.url
@@ -144,16 +144,16 @@ class FeedsHandler
   end
   
   def self.get_date(feed)
-    if feed.dc_date
-      published = feed.dc_date.to_s
-    elsif  feed.pubDate
-      published = feed.pubDate.to_s
-    elsif feed.published
-      published = feed.published.to_s
-    else 
-      published = ''
-    end
-    return published
+    #if feed.dc_date
+    #  published = feed.dc_date.to_s
+    #elsif  feed.pubDate
+    #  published = feed.pubDate.to_s
+    #elsif feed.published
+    #  published = feed.published.to_s
+    #else 
+    #  published = ''
+    #end
+    return feed.published.to_s
   end
   
   def self.update_cache_status_file(cache_file, content)

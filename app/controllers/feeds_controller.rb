@@ -8,17 +8,18 @@ require 'simple-rss'
 require 'feeds_handler'
 
 class FeedsController < ApplicationController
+  before_filter :authenticate
   #caches_page :index
   
   $DEBUG = true
-  
-  $cache_status_file = "cache/last_update_1"
   $update_interval = 360
-  #$cache_status_file = "cache/last_update_#{session[:user_id]}"
   
   def index
-    session[:user_id] = 1 #todo: implement login 
-    @feeds = Feed.get_user_feeds()
+    Rails.logger.debug "################################" if $DEBUG == true
+    Rails.logger.debug "#                              #" if $DEBUG == true
+    Rails.logger.debug "################################" if $DEBUG == true
+    $cache_status_file = "cache/last_update_#{session[:user_id]}"
+    @feeds = Feed.get_user_feeds(session[:user_id])
     # view index javascript call to feeds/front_page
   end
   
@@ -27,11 +28,12 @@ class FeedsController < ApplicationController
     
     Rails.logger.debug "Front Page..." if $DEBUG == true
     #if FeedsHandler.cache_needs_update($cache_status_file, $update_interval) then
+    
     unless params[:id].nil?  then
-        @mem_feeds = FeedsHandler.update_front_page_cache(params[:id].to_i)
+        @mem_feeds = FeedsHandler.update_front_page_cache(params[:id].to_i, session[:user_id])
     else
         Rails.logger.debug "Cache up to date, fetting feeds from DB..." if $DEBUG == true
-        @mem_feeds = Item.get_user_items()
+        @mem_feeds = Item.get_user_items(session[:user_id])
     end
     render :partial => 'front_page'
   end
@@ -41,8 +43,8 @@ class FeedsController < ApplicationController
       feeds = ''
       if cache_needs_update then
         Rails.logger.debug "Cache needs update, updating..." if $DEBUG == true
-        Item.delete_user_items()
-        result = Feed.get_user_feeds(false)
+        Item.delete_user_items(session[:user_id])
+        result = Feed.get_user_feeds(session[:user_id], false)
         feeds = result.join(",")
       end
       result = "#{cache_needs_update.to_s}|#{feeds}"
@@ -84,6 +86,7 @@ class FeedsController < ApplicationController
     params[:feed][:url] = Feedbag.find(params[:feed][:url]).first
     unless params[:feed][:url].nil? or params[:feed][:name].blank? then
         @feed = Feed.new(params[:feed])
+        @feed.user_id = session[:user_id]
         @feed.save
         flash[:notice] = "Feed Created."
         redirect_to :action => 'index'
