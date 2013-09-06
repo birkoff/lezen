@@ -1,0 +1,39 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this llamada from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+
+<div class="span span4">
+  <div class="field">
+    Name:<br />
+    <%= f.text_field :name, :size => "50" %>
+  </div>
+  <div class="field">
+    Email:<br />
+    <%= f.text_field :email, :size => "50" %>
+  </div>
+  <div class="field">
+    Password:<br />
+    <%= f.password_field :password, :size => "50" %>
+  </div>
+  <div class="field">
+  Re-Type Password:<br />
+    <%= password_field_tag :password2, '', :size => "50" %>
+  </div>
+</div>
+
+<div class="actions">
+  <%= f.submit 'Save', :class => "btn" %>
+  <%= link_to 'Cancel', {:controller=>"users", :action => "login"}, :class => "btn" %>
+</div>
+
+<% end %>

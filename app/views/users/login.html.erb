@@ -1,0 +1,35 @@
+<div id="login-form">
+
+<%= form_tag 'process_login' do %>
+    <div style="margin:0;padding:0;display:inline">
+    <table>
+    <tbody><tr>
+        <td align="right"><label for="mail">Mail:</label></td>
+        <td align="left"><input type="text" tabindex="1" name="email" id="email"></td>
+    </tr>
+    <tr>
+        <td align="right"><label for="password">Password:</label></td>
+        <td align="left"><input type="password" tabindex="2" name="password" id="password"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td align="left">
+            <!--<label for="autologin"><input type="checkbox" value="1" tabindex="4" name="autologin" id="autologin"> Stay logged in</label>-->
+        </td>
+    </tr>
+    <tr>
+        <td align="left">
+                <!--<a href="/account/lost_password">Lost password</a>-->
+        </td>
+        <td align="right">
+            <!--<input type="submit" tabindex="5" value="Login »" name="login" class='btn'>-->
+            <%= submit_tag 'Login', :class => 'btn' %>
+            <%= link_to 'Register', {:controller=>"users", :action => "new"}, :class => "btn" %>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+<% end %>
+</div>
+<br/><br/><br/>
+Developed by <a href="http://birkoff.net">Hector Reyes Aleman - 2013</a>
