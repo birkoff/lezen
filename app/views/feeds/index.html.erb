@@ -1,10 +1,16 @@
 <script type="text/javascript">
 $(document).ready(function()
 { 
+	    var hostname = document.location.hostname;
 	    var path = document.location.pathname;
-	    var env = path.replace(/\//g,'');
+	    var path = path.replace(/\//,'');
+	    var env = path.replace(/feeds/,'');
+;
+        var url = "http://" + hostname + "/" + env + "feeds/cache_needs_update";
         
-        var url = "feeds/cache_needs_update";
+        //alert(hostname);
+        //alert(env)
+        //alert(url);
         
         $.get(url, function(cache_needs_update) {
         	needs_update = new String(cache_needs_update);
@@ -16,7 +22,7 @@ $(document).ready(function()
 	        {  
 		        for(i=0;i < feeds.length; i++)
 		        {
-		        	var url = "feeds/front_page/" + feeds[i];
+		        	var url = "http://" + hostname + "/" + env + "feeds/front_page/" + feeds[i];
 		        	$.get(url, function(html) {
 			        	$("#random-feeds").append(html);
 			    	});
@@ -24,7 +30,7 @@ $(document).ready(function()
 		    }
 		    else
 		    {
-		    	var url = "feeds/front_page/";
+		    	var url = "http://" + hostname + "/" + env + "feeds/front_page/";
 		        $.get(url, function(html) {
 			        $("#random-feeds").html(html);
 			    });
@@ -42,7 +48,7 @@ $(document).ready(function()
             var arrid = id.split('-');
             id = arrid[2];
             
-            var url = "feeds/"+id;
+            var url = "http://" + hostname + "/" + env + "feeds/"+id;
             $.get(url, function(html) {
 	          $("#random-feeds").html(html);
 	        }); 
