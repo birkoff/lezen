@@ -6,15 +6,18 @@ Lire::Application.routes.draw do
   match 'login' => 'users#login'
   match 'logout' => 'users#logout'
   match 'process_login' => 'users#process_login'
+  match 'readlater/:id', :to => 'readlater#destroy', :as => :readlateritem
   #get "feeds/index"
   #get "feeds/front_page#index"
   get "feeds/cache_needs_update"
   get "feeds/front_page/"
+  get "feeds/modify/"
   
   root :to => "feeds#index"
   resources :feeds
   resources :readlater
   resources :users
+  
   get ':controller(/:action(/:id))'
   
   

@@ -57,7 +57,7 @@ $(document).ready(function()
     <% @feeds.each do |feed| %>
     <tr>
       <td class="feed-list-item"><%= link_to feed.name, '#', :id => "feed-link-#{feed.id}", :class => 'feed-link' %></td>
-      <!--<td><%= link_to "Edit", edit_feed_path(feed), :class => 'btn'  %></td>
+      <!-- ><td><%= link_to "Edit", edit_feed_path(feed), :class => 'btn'  %></td>
       <td><%= link_to 'Delete', feed, :confirm => 'Sure?...He no le muevas si no eres Hector... aun no le pongo seguridad a esto', :method => :delete, :class => 'btn' %></td>-->
     </tr>
     <% end %>

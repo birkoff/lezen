@@ -15,6 +15,7 @@
     	<% if !session[:id].nil? %>
 	    	<%= link_to 'Feeds List', { :controller => :feeds, :action => :index }, :class => "btn" %>
 	    	<%= link_to 'Add Feed', new_feed_path, :class=> "btn" %>
+	    	<%= link_to 'Edit/Delete Feed', {:controller => :feeds, :action => :modify},:class=> "btn" %>
 	        <%= link_to 'Read Later Queue', { :controller => :readlater, :action => :index }, :class => "btn" %>
 	        <%= link_to 'logout', {:controller=>"users", :action => "logout"}, :class => "btn" %>
 	    <% end %>

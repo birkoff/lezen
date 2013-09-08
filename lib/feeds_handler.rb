@@ -180,7 +180,7 @@ class FeedsHandler
       end
       a=Time.new.to_i
       c=a-b
-      Rails.logger.debug "#{!File.exist?(cache_file)} or #{c} #{2500}" if $DEBUG == true
+      Rails.logger.debug "#{!File.exist?(cache_file)} or #{c} > #{update_interval}" if $DEBUG == true
       if !File.exist?(cache_file) or c > update_interval
           Rails.logger.debug "Cache file needs update... true" if $DEBUG == true
           return true

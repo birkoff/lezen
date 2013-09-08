@@ -30,7 +30,7 @@
                 <%= submit_tag "read later", :class => "btn" %>
             <% end %>
         <% end %>
-        <%= link_to 'Like', feeds_path, :class => "btn" %>
+       
     </div>
        <div class="feed_item_date"><%= item.published if defined? item.published %></div>
       <div class="feed_item_text"><%= item.content.html_safe if defined? item.content.html_safe %></div>

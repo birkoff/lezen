@@ -1,10 +1,10 @@
 require 'rubygems'
-require 'open-uri'
+#require 'open-uri'
 require 'feedzirra'
 require 'feedbag'
 require 'date'
-require 'file_cache'
-require 'simple-rss'
+#require 'file_cache'
+#require 'simple-rss'
 require 'feeds_handler'
 
 class FeedsController < ApplicationController
@@ -75,11 +75,15 @@ class FeedsController < ApplicationController
     @feed = Feed.find(params[:id])
   end
   
+  def modify
+    @feeds = Feed.get_user_feeds(session[:user_id])
+  end
+  
   def update
     @feed = Feed.find(params[:id])
     @feed.update_attributes(params[:feed])
     flash[:notice] = "Feed Updated."
-    redirect_to :action => 'index'
+    redirect_to :action => 'modify'
   end
   
   def create
@@ -99,7 +103,7 @@ class FeedsController < ApplicationController
   def destroy
     Feed.find(params[:id]).destroy
     flash[:notice] = "Feed Deleted."
-    redirect_to :action => 'index'
+    redirect_to :action => 'modify'
   end
   
 end
