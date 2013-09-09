@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Lire</title>
+  <title>Lezen</title>
   
   <%= stylesheet_link_tag    "feeds", :media => "all" %>
   <%= javascript_include_tag "jquery" %>
@@ -11,7 +11,7 @@
 <body>
 <div id="wrapper">
   <div id="wrapper2">
-    <div id="header"><h1>Lire - Lets read a litte bit</h1>
+    <div id="header"><h1>Lezen - Lets read a litte bit</h1>
     	<% if !session[:id].nil? %>
 	    	<%= link_to 'Feeds List', { :controller => :feeds, :action => :index }, :class => "btn" %>
 	    	<%= link_to 'Add Feed', new_feed_path, :class=> "btn" %>

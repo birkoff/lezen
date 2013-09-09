@@ -59,6 +59,7 @@ $(document).ready(function()
 </script>
 <div id="feeds-list">
 	<h1>Lire Feeds</h1>
+	<% if @feeds.length > 0 then %>
 <table>
     <% @feeds.each do |feed| %>
     <tr>
@@ -68,6 +69,9 @@ $(document).ready(function()
     </tr>
     <% end %>
 </table>
+    <% else %>
+    You don't have any feeds... <%= link_to 'Add Feed', new_feed_path, :class=> "btn" %>
+	<% end %>
 </div>
 <div id='random-feeds'>
 </div>
