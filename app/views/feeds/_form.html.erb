@@ -1,3 +1,5 @@
+<h2>Add Feed</h2>
+<div class="box">
 <%= form_for(@feed) do |f| %>
   <% if @feed.errors.any? %>
     <div id="error_explanation">
@@ -21,9 +23,10 @@
     <%= f.text_field :url, :size => "50" %>
   </div>
 </div>
-
+<br/>
 <div class="actions">
-  <%= f.submit 'Save' %>
+  <%= f.submit 'Aggregate', :class => 'btn' %>
 </div>
 
 <% end %>
+</div>

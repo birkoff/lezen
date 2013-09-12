@@ -1,10 +1,10 @@
-require 'rubygems'
+#require 'rubygems'
 #require 'open-uri'
+#require 'file_cache'
+#require 'simple-rss'
 require 'feedzirra'
 require 'feedbag'
 require 'date'
-#require 'file_cache'
-#require 'simple-rss'
 require 'feeds_handler'
 
 class FeedsController < ApplicationController
@@ -69,6 +69,7 @@ class FeedsController < ApplicationController
   
   def new
     @feed = Feed.new
+    @recommended_feeds = RecommendedFeed.all
   end
   
   def edit
@@ -87,16 +88,37 @@ class FeedsController < ApplicationController
   end
   
   def create
-    params[:feed][:url] = Feedbag.find(params[:feed][:url]).first
-    unless params[:feed][:url].nil? or params[:feed][:name].blank? then
-        @feed = Feed.new(params[:feed])
-        @feed.user_id = session[:user_id]
-        @feed.save
-        flash[:notice] = "Feed Created."
-        redirect_to :action => 'index'
-    else
-        flash[:notice] = "Feed URL or Name not valid."
-        redirect_to :action => 'new'
+    name = params[:feed][:name]
+    url = params[:feed][:url]
+    
+    if name.blank? then
+      flash[:error] = "You must provide a name."
+      redirect_to :action => 'new'
+      return
+    end
+    
+    if url.blank? then
+      flash[:error] = "You must provide a url. It can be either the RSS link or the URI of the page"
+      redirect_to :action => 'new'
+      return
+    end
+        
+    url = Feedbag.find(url).first
+    if url.nil? then
+      flash[:error] = "Feed cannot be aggregated."
+      redirect_to :action => 'new'
+      return
+    end
+    
+    begin   
+      @feed = Feed.new(params[:feed])
+      @feed.user_id = session[:user_id]
+      @feed.save
+      flash[:notice] = "Feed Aggregated."
+      redirect_to :action => 'index'
+    rescue Exception => e
+      flash[:error] = e.message
+      redirect_to :action => 'new'
     end
   end
   

@@ -31,22 +31,48 @@ class UsersController < ApplicationController
     email = params[:user][:email]
     password = params[:user][:password]
     password2 = params[:password2]
+   
+    if name.blank? then
+      flash[:error] =  "You must provide a name."
+      redirect_to :action => 'new'
+      return
+    end
     
+    if email.blank? then
+      flash[:error] = "You must provide an email or username."
+      redirect_to :action => 'new'
+      return
+    end
+    
+    if password.blank? then
+      flash[:error] = "Password cannot be blank."
+      redirect_to :action => 'new'
+      return
+    end
+       
     if password != password2 then
-      flash[:notice] = "Passwords does not match."
+      flash[:error] = "Passwords does not match."
+      redirect_to :action => 'new'
+      return
+    end
+    
+    begin
+      @user = User.new
+      @user.name = name
+      @user.email = email
+      @user.password = password
+      @user.save
+      
+      session[:id] = @user.id
+      session[:user_id] = @user.id
+      session[:user_name] = @user.name
+      redirect_to root_url
+    
+   rescue Exception => e
+      flash[:error] = e.message
       redirect_to :action => 'new'
     end
     
-    @user = User.new
-    @user.name = name
-    @user.email = email
-    @user.password = password
-    @user.save
-
-    session[:id] = @user.id
-    session[:user_id] = @user.id
-    session[:user_name] = @user.name
-    redirect_to root_url
   end
   
   def edit

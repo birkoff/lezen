@@ -11,7 +11,7 @@
 <body>
 <div id="wrapper">
   <div id="wrapper2">
-    <div id="header"><h1>Lezen - Lets read a litte bit</h1>
+    <div id="header"><h1>Lezen - Hello <%= session[:user_name] if defined? session[:user_name] %>... Lets read a litte bit</h1>
     	<% if !session[:id].nil? %>
 	    	<%= link_to 'Feeds List', { :controller => :feeds, :action => :index }, :class => "btn" %>
 	    	<%= link_to 'Add Feed', new_feed_path, :class=> "btn" %>
@@ -20,11 +20,16 @@
 	        <%= link_to 'logout', {:controller=>"users", :action => "logout"}, :class => "btn" %>
 	    <% end %>
     </div>
-      <div class="main-content">
+    <div class="main-content">
         <% if flash[:notice] %><div id="notice"><%= flash[:notice] %></div><% end %>
         <% if flash[:error] %><div id="error"><%= flash[:error] %></div><% end %>
         <%= yield %>
-       </div>
+    </div>
+    <div id="footer">
+	  <div class="bgl"><div class="bgr">
+	    Developed by <a href="http://birkoff.net">Hector Reyes Aleman - 2013</a>
+      </div></div>
+    </div>
   </div>
 </div>
 </body>

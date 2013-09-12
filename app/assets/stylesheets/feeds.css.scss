@@ -18,7 +18,7 @@ body{
 #header {
     background-color: #507AAA;
     color: #F8F8F8;
-    height: 6.2em;
+    /*height: 6.2em;*/
     margin: 0;
     padding: 4px 8px 0 6px;
     position: relative;
@@ -35,11 +35,11 @@ body{
   width: 22%;
 }
 
-.main-content {
+body .main-content {
     color: #0088CC;
     font: 100% Verdana,sans-serif;
     margin: 0 20px 35px;
-    min-height: 1100px;
+    min-height: 500px;
     text-decoration: none;
 }
 
@@ -161,6 +161,24 @@ button.btn::-moz-focus-inner, input.btn[type="submit"]::-moz-focus-inner {
     vertical-align: middle;
 }
 
+a:link {text-decoration:none;}
+a:visited {text-decoration:none;}
+a:hover {text-decoration:none;}
+a:active {text-decoration:none;}
+
+
+div #notice {
+    background: url("icons/true.png") no-repeat scroll right center #DFFFDF;
+    border-color: #9FCF9F;
+    color: #005F00;
+}
+
+div #error {
+    background: url("icons/exclamation.png") no-repeat scroll right center #FFE3E3;
+    border-color: #DD0000;
+    color: #880000;
+}
+
 #login-form table {
     background-color: #C7D2D2;
     border: 2px solid #FDBF3B;
@@ -169,4 +187,31 @@ button.btn::-moz-focus-inner, input.btn[type="submit"]::-moz-focus-inner {
     margin-top: 3em;
     padding: 1em;
     width: 500px;
+}
+#about {
+  padding-top: 32px;
+}
+
+.box {
+    background-color: #F6F6F6;
+    border: 1px solid #E4E4E4;
+    color: #505050;
+    line-height: 1.5em;
+    margin-bottom: 10px;
+    padding: 6px;
+}
+
+
+.field {
+    font-weight: bold;
+}
+
+#footer {
+    background: none repeat scroll 0 0 #F1EFE2;
+    border: 0 none;
+    color: #999999;
+    height: 40px;
+    margin: 4px 10px;
+    padding: 0;
+    text-align: right;
 }
