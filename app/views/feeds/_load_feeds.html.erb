@@ -1,0 +1,79 @@
+<script type="text/javascript">
+$(document).ready(function()
+{ 
+	    var origin = window.location.origin;
+	    //var path = document.location.pathname;
+	    //var path = path.replace(/\//,'');
+	    //var env = path.replace(/feeds/,'');
+        var env = "";
+        var url = origin + "/" + env + "feeds/cache_needs_update";
+        
+        //alert(window.location.origin);
+        //alert(hostname);
+        //alert(env)
+        //alert(url);
+        
+        $.get(url, function(cache_needs_update) {
+        	needs_update = new String(cache_needs_update);
+        	var obj = needs_update.split("|");
+        	needs_update = obj[0];
+        	feeds = obj[1].split(",");
+        	
+        	if(needs_update == 'true')
+	        {  
+		        for(i=0;i < feeds.length; i++)
+		        {
+		        	var url = origin + "/" + env + "feeds/front_page/" + feeds[i];
+		        	$.get(url, function(html) {
+			        	$("#random-feeds").append(html);
+			    	});
+		        }
+		    }
+		    else
+		    {
+		    	var url = origin + "/" + env + "feeds/front_page/";
+		        $.get(url, function(html) {
+			        $("#random-feeds").html(html);
+			    });
+		    }
+	    });
+        
+        /*
+	    $.get(url, function(html) {
+	        	$("#random-feeds").html(html);
+	    });
+        */
+        $(".feed-link").each(function () {
+          $(this).click(function() {
+            var id = this.id;
+            var arrid = id.split('-');
+            id = arrid[2];
+            
+            var url = origin + "/" + env + "feeds/"+id;
+            $.get(url, function(html) {
+	          $("#random-feeds").html(html);
+	        }); 
+          });
+        });
+});
+//feed_path(feed)
+</script>
+<div id="feeds-list">
+	<h1>Feeds:</h1>
+	<% if @feeds.length > 0 then %>
+<table>
+    <% @feeds.each do |feed| %>
+    <tr>
+      <td class="feed-list-item"><%= link_to feed.name, '#', :id => "feed-link-#{feed.id}", :class => 'feed-link' %></td>
+      <!-- ><td><%= link_to "Edit", edit_feed_path(feed), :class => 'btn'  %></td>
+      <td><%= link_to 'Delete', feed, :confirm => 'Sure?...He no le muevas si no eres Hector... aun no le pongo seguridad a esto', :method => :delete, :class => 'btn' %></td>-->
+    </tr>
+    <% end %>
+</table>
+    <% else %>
+    You don't have any feeds... <%= link_to 'Add Feed', new_feed_path, :class=> "btn" %>
+	<% end %>
+</div>
+<div id='random-feeds'>
+</div>
+<br/><br/>
