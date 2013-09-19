@@ -1,5 +1,7 @@
 class ReadlaterController < ApplicationController
-  before_filter :authenticate
+  
+  before_filter :request_access
+  
   def index
     @items = Readlateritem.where("user_id = ?", session[:user_id]).order("id ASC")
   end

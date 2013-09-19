@@ -1,14 +1,16 @@
-class UsersController < ApplicationController
+class UsersController < ApplicationController  
   def login
     @user = User.new
   end
   
   def process_login
     if user = User.authenticate(params[:email], params[:password])
-        session[:id] = user.id
-        session[:user_id] = user.id
-        session[:user_name] = user.name
-        redirect_to session[:return_to] || root_url
+        if params[:remember_me]
+            cookies.permanent[:auth_token] = user.auth_token
+        else
+            cookies[:auth_token] = user.auth_token
+        end
+        redirect_to :controller => 'feeds', :action => 'index'
     else
         flash[:error] = 'Invalid login.'
         redirect_to :action => 'login'
@@ -18,6 +20,11 @@ class UsersController < ApplicationController
   def logout
     reset_session
     session[:id] = nil
+    session[:user_id] = nil
+    session[:user_name] = nil
+    
+    cookies.delete(:auth_token)
+    
     flash[:notice] = "Logged out!"
     redirect_to :action => 'login'
   end
@@ -85,4 +92,6 @@ class UsersController < ApplicationController
     flash[:notice] = "User Updated."
     redirect_to :action => 'index'
   end
+
+  
 end

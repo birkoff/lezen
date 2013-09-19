@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
     return true
   end
   
+  before_create { generate_token(:auth_token) }
+  
   after_create do |record|
     #UserLog.add_action('create_user')
     return true
@@ -30,4 +32,11 @@ class User < ActiveRecord::Base
     end
     return true
   end
+  
+  def generate_token(column)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while User.exists?(column => self[column])
+  end
+  
 end

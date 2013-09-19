@@ -1,31 +1,9 @@
-<div id="login-form" style="float: left;">
-<%= form_tag 'process_login' do %>
-    <table>
-    <tbody>
-    <tr>
-        <td align="right"><label for="mail">Mail:</label></td>
-        <td align="left"><input type="text" tabindex="1" name="email" id="email"></td>
-    </tr>
-    <tr>
-        <td align="right"><label for="password">Password:</label></td>
-        <td align="left"><input type="password" tabindex="2" name="password" id="password"></td>
-    </tr>
-    
-    <tr>
-    	<td></td>
-        <td align="right">
-            <%= submit_tag 'Login', :class => 'btn' %>
-            <%= link_to 'Register', {:controller=>"users", :action => "new"}, :class => "btn" %>
-        </td>
-    </tr>
-    </tbody>
-    </table>
-<% end %>
+<div style="float: left;">
+<%= render 'login_form' %>
 </div>
 
-<div id="about" style="float: right;">
-	Lezen is an aggregator of content served by web feeds... in other words... a READER!<br/>
-	Lezen means read in dutch!<br/><br/>
-	<h3>Register Now</h3>
-	<%= render 'form' %>
+<div style="float: right;">
+<%= render 'home/about_us' %>
+<h3>Just looking around?... Register and start reading now!</h3>
+<%= render 'form' %>
 </div>
